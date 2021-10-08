@@ -2,6 +2,7 @@
   <b-container fluid class="back-ground">
     <b-row>
       <h1>Lista de personages crua</h1>
+      <SearchPersonagem />
     </b-row>
     <CardPersonagem />
   </b-container>
@@ -11,10 +12,11 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import CardPersonagem from '../components/CardPersonagem.vue'
+import SearchPersonagem from "../components/SearchPersonagem.vue"
 
 export default {
   name: 'Personagens',
-  components:{CardPersonagem},
+  components:{CardPersonagem, SearchPersonagem},
   mounted(){
     this.getPersonagens().then(()=>{
     }) 

@@ -4,7 +4,7 @@
       <b-card
         v-for="personagem in listPersonagens"
         :key="personagem.index"
-        :title="personagem.index"
+        :title="personagem.name"
         :img-src="personagem.image"
         img-alt="Image"
         style="max-width: 20rem"
@@ -18,36 +18,46 @@
         </b-card-text>
         <b-button
           variant="outline-primary"
-          @click="openDetailspersonagem(personagem.id)"
+          @click="abrirDetalhespersonagem(personagem.id)"
           >Detalhes</b-button
         >
       </b-card>
     </b-row>
 
+  <b-row>
     <div class="row">
       <b-container class="btn__act--pages">
         <b-button
           variant="light"
           :disabled="getPageIndex < 2"
-          @click="previousPage(getPageIndex)"
+          @click="PaginaAnterior(getPageIndex)"
           >Anterior</b-button
         >
-        <b-button variant="light" @click="nextPage(getPageIndex)"
+        <b-button variant="light" @click="proximaPagina(getPageIndex)"
           >Proximo</b-button
         >
       </b-container>
     </div>
+  </b-row>
+    
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'CardPersonagem',
+    data(){
+      return{
+        pageNumber: 1
+      }
+    },
     computed:{
-        ...mapGetters("personagem", ['listPersonagens'])
+        ...mapGetters("personagem", ['listPersonagens', 'getPageIndex'])
     },
     methods:{
+      ...mapActions('personagem', ["getPersonagemByPage"]),
+
     speciesTranslate(specie) {
       if (specie === "Human") {
         return "Humano";
@@ -61,29 +71,29 @@ export default {
         } else {
             return "Morto";
         }
-        }
-    },
-     openDetailspersonagem(id) {
+        },
+    abrirDetalhespersonagem(id) {
       this.$router.push(`/personagem/detalhes/${id}`);
     },
-    nextPage(id) {
+    proximaPagina(id) {
       let params = {
         id: id,
         pageIndex: this.pageNumber,
       };
-      this.getpersonagemByPage(params).then(() => {
+      this.getPersonagemByPage(params).then(() => {
         this.$store.commit("personagem/SET_PAGE_INDEX", params.pageIndex);
       });
     },
-    previousPage(id) {
+    PaginaAnterior(id) {
       let params = {
         id: id - 1,
         pageIndex: this.pageNumber,
       };
-      this.getpersonagemByPage(params).then(() => {
+      this.getPersonagemByPage(params).then(() => {
         this.$store.commit("personagem/REMOVE_PAGE_INDEX", params.pageIndex);
       });
     },
+    }
 }
 </script>
 
