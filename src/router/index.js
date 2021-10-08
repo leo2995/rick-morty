@@ -1,19 +1,38 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../pages/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Personagens',
+    component: () => import( '../pages/Personagens.vue')
   },
   {
-    path: '/about',
-    name: 'About', 
-    component: () => import( '../pages/About.vue')
+    path: '/episodios',
+    name: 'Episodios', 
+    component: () => import( '../pages/Episodios.vue')
+  },
+  {
+    path: '/locais',
+    name: 'Locais', 
+    component: () => import( '../pages/Locais.vue')
+  },
+  {
+    path: '/sobre',
+    name: 'Sobre',
+    component: ()=> import('../pages/Sobre.vue')
+  },
+  {
+    path: '/personagem/detalhes/:id',
+    name: 'Detalhes',
+    component: ()=> import('../pages/Detalhes.vue')
+  },
+  { 
+    path: '/:pathMatch(.*)*',
+    name: 'PaginaNaoExiste',
+    component: ()=> import('../pages/PaginaNaoExiste.vue')
   }
 ]
 

@@ -12,8 +12,7 @@ export default {
   },
   actions: {
     getPersonagens(context) {
-      debugger;
-      return serviceApi.getPersonagens().then((res) => {
+      return serviceApi.getPersonagens().then((res) => {  
         context.commit("SET_PERSONAGENS", res.data.results);
       });
     },
